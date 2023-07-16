@@ -1,0 +1,132 @@
+name: build-nightly
+
+on:
+  # Run nightly
+  schedule:
+    - cron: '0 0 * * *'
+  # Allow for manual dispatch
+  workflow_dispatch:
+
+env:
+  GH_REPO: elfmz/far2l
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      commit_date: ${{ steps.repo.outputs.commit_date }}
+      commit_sha: ${{ steps.repo.outputs.commit_sha }}
+      commit_url: ${{ steps.repo.outputs.commit_url }}
+      release_tag: ${{ steps.repo.outputs.release_tag }}
+      is_active: ${{ steps.activity.outputs.is_active }}
+    steps:
+      - name: Get repo data via GH API
+        id: repo
+        run: |
+          echo "commit_date=$(gh api repos/$GH_REPO/commits/master --jq '.commit.committer.date')" >> $GITHUB_OUTPUT
+          echo "commit_sha=$(gh api repos/$GH_REPO/commits/master --jq '.sha')" >> $GITHUB_OUTPUT
+          echo "commit_url=$(gh api repos/$GH_REPO/commits/master --jq '.html_url')" >> $GITHUB_OUTPUT
+          echo "release_tag=$(gh api repos/$GH_REPO/releases/latest --jq '.name')" >> $GITHUB_OUTPUT
+      - name: Check for repo activity
+        id: activity
+        env:
+          DATE: ${{ steps.repo.outputs.commit_date }}
+          URL: ${{ steps.repo.outputs.commit_url }}
+        run: |
+          TIMESTAMP=$(date --utc -d $DATE +%s)
+          DAYS=$(( ( $(date --utc +%s) - $TIMESTAMP ) / 86400 ))
+          echo "Repository activity: $(date --utc -d $DATE)"
+          echo "Commit: $URL"
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            is_active=true
+          elif [[ $DAYS -lt 1 ]] ; then
+            is_active=true
+          else
+            echo "Repository not updated."
+            is_active=false
+          fi
+          echo "is_active=$is_active" >> $GITHUB_OUTPUT
+
+  build:
+    needs: prepare
+    if: needs.prepare.outputs.is_active == 'true'
+    runs-on: ubuntu-latest
+    container:
+        image: ghcr.io/termux/package-builder:latest
+    strategy:
+      matrix:
+        target_arch: [aarch64, arm, i686, x86_64]
+    steps:
+      - name: Checkout termux-packages
+        uses: actions/checkout@v3
+        with:
+          repository: termux/termux-packages
+          path: termux-packages
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: packages
+      - name: Configure environment
+        run: |
+          ./termux-packages/scripts/setup-android-sdk.sh
+      - name: Build packages
+        working-directory: ./termux-packages
+        env:
+          DATE: ${{ needs.prepare.outputs.commit_date }}
+          SHA: ${{ needs.prepare.outputs.commit_sha }}
+          TAG: ${{ needs.prepare.outputs.release_tag }}
+        run: |
+          export _VERSION=$(echo $TAG | grep -Po '(\d+\.)+\d+')
+          export _COMMIT=$SHA
+          export _COMMIT_DATE=$(date --utc -d $DATE +%Y%m%d)
+          cp -vr ${GITHUB_WORKSPACE}/packages/* packages
+          ./build-package.sh -I -a ${{ matrix.target_arch }} far2l
+          ls -1R output
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: debs-${{ matrix.target_arch }}
+          path: termux-packages/output/*.deb
+
+  deploy:
+    needs: [prepare, build]
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+      - name: Merge artifacts
+        run: |
+          mkdir debs
+          find . -name '*.deb' -exec cp -t ./debs {} +
+          ls -1R
+      - name: Install termux-apt-repo
+        run: python3 -m pip install termux-apt-repo
+      - name: Create apt repo
+        run: |
+          termux-apt-repo ./debs ./output
+      - name: Deploy to GH pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          full_commit_message: github.com/${{ env.GH_REPO }}/commit/${{ needs.prepare.outputs.commit_sha }}
+          publish_dir: ./output
+      - name: Create version string for badge
+        env:
+          DATE: ${{ needs.prepare.outputs.commit_date }}
+          TAG: ${{ needs.prepare.outputs.release_tag }}
+        run: |
+          echo VERSION=$(echo $TAG | grep -Po '(\d+\.)+\d+')+git$(date --utc -d $DATE +%Y%m%d) >> $GITHUB_ENV
+      - name: Write to gist
+        uses: schneegans/dynamic-badges-action@v1.6.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: f53cb6c1d56b0eaf40c88d607fc5fef1
+          filename: far2l-termux.json
+          label: version
+          message: ${{ env.VERSION }}
+          color: blue
