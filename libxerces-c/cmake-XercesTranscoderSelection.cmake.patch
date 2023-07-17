@@ -1,0 +1,15 @@
+diff --git a/cmake/XercesTranscoderSelection.cmake b/cmake/XercesTranscoderSelection.cmake
+index 5dd7c62..148ac93 100644
+--- a/cmake/XercesTranscoderSelection.cmake
++++ b/cmake/XercesTranscoderSelection.cmake
+@@ -57,10 +57,8 @@ set(gnuiconv_available 0)
+ if(HAVE_ICONV_H AND HAVE_WCHAR_H AND
+    HAVE_CTYPE_H AND HAVE_LOCALE_H AND HAVE_ERRNO_H)
+   if (HAVE_ENDIAN_H OR HAVE_MACHINE_ENDIAN_H OR HAVE_ARPA_NAMESER_COMPAT_H)
+-    if(HAVE_ICONV_OPEN AND HAVE_ICONV_CLOSE AND HAVE_ICONV)
+       set(gnuiconv_available 1)
+       list(APPEND transcoders gnuiconv)
+-    endif()
+   endif()
+ endif()
+ 
