@@ -1,4 +1,4 @@
-[![build-nightly](https://github.com/spvkgn/far2l-termux/actions/workflows/nightly.yml/badge.svg)](https://github.com/spvkgn/far2l-termux/actions/workflows/nightly.yml) ![version](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/spvkgn/f53cb6c1d56b0eaf40c88d607fc5fef1/raw/far2l-termux.json)
+[![build status](https://github.com/spvkgn/far2l-termux/actions/workflows/build.yml/badge.svg)](https://github.com/spvkgn/far2l-termux/actions/workflows/build.yml) ![version](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/spvkgn/f53cb6c1d56b0eaf40c88d607fc5fef1/raw/far2l-termux.json)
 # far2l-termux
 
 [far2l](https://github.com/elfmz/far2l) apt repository for Termux — nightly builds
