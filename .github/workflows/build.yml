@@ -1,5 +1,5 @@
 name: build
-run-name: Nightly build for ${{ github.event.client_payload.sha }}
+run-name: 🌙 Nightly build for ${{ github.event.client_payload.tag }}-${{ github.event.client_payload.sha }}
 
 on:
   repository_dispatch:
@@ -9,8 +9,9 @@ jobs:
   build:
     name: ${{ matrix.target_arch }} build
     runs-on: ubuntu-latest
-    container:
-        image: ghcr.io/termux/package-builder:latest
+    env:
+      ANDROID_HOME: "/opt/termux/android-sdk"
+      NDK: "/opt/termux/android-ndk"
     strategy:
       matrix:
         target_arch: [aarch64, arm, i686, x86_64]
@@ -20,13 +21,12 @@ jobs:
         with:
           repository: termux/termux-packages
           path: termux-packages
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
           path: packages
-      - name: Configure environment
-        run: |
-          ./termux-packages/scripts/setup-android-sdk.sh
+
       - name: Build packages
         working-directory: ./termux-packages
         env:
@@ -34,13 +34,14 @@ jobs:
           SHA: ${{ github.event.client_payload.sha }}
           TAG: ${{ github.event.client_payload.tag }}
         run: |
-          export _VERSION=$(echo $TAG | grep -Po '(\d+\.)+\d+')
-          export _COMMIT=$SHA
-          export _COMMIT_DATE=$(date --utc -d $DATE +%Y%m%d)
+          VERSION=$TAG+git$DATE
           find . -type d -name 'far2l' -exec rm -rf {} +
           cp -vr ${GITHUB_WORKSPACE}/packages/* packages
-          ./build-package.sh -I -a ${{ matrix.target_arch }} far2l
+          sed "s|@VERSION@|$VERSION|" -i packages/far2l/build.sh
+          sed "s|@GIT_HASH@|$SHA|" -i packages/far2l/build.sh
+          ./scripts/run-docker.sh ./build-package.sh -I -a ${{ matrix.target_arch }} far2l
           ls -1R output
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -55,38 +56,40 @@ jobs:
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v3
+
       - name: Merge artifacts
         run: |
           mkdir debs
           find . -name '*.deb' -exec cp -t ./debs {} +
+
       - name: Install termux-apt-repo
         run: python3 -m pip install termux-apt-repo
+
       - name: Create apt repo
         run: |
           termux-apt-repo ./debs ./public
+
       - name: Deploy to GH pages
+        id: gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
-          full_commit_message: elfmz/far2l@${{ github.event.client_payload.sha }}
+          full_commit_message: ${{ github.event.client_payload.repo }}@${{ github.event.client_payload.sha }}
           force_orphan: true
-      - name: Create version string for badge
-        env:
-          DATE: ${{ github.event.client_payload.date }}
-          TAG: ${{ github.event.client_payload.tag }}
-        run: |
-          echo VERSION=$(echo $TAG | grep -Po '(\d+\.)+\d+')+git$(date --utc -d $DATE +%Y%m%d) >> $GITHUB_ENV
-      - name: Write to gist
+
+      - name: Update version for badge
+        if: steps.gh-pages.outcome == 'success'
         uses: schneegans/dynamic-badges-action@v1.6.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: f53cb6c1d56b0eaf40c88d607fc5fef1
           filename: far2l-termux.json
           label: version
-          message: ${{ env.VERSION }}
+          message: ${{ github.event.client_payload.tag }}+git${{ github.event.client_payload.date }}
           color: blue
+
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@v2
         continue-on-error: true
