@@ -1,0 +1,76 @@
+Package: far2l-plugins-colorer
+Architecture: aarch64
+Installed-Size: 14108
+Maintainer: @spvkgn
+Version: 2.5.3+git20240107
+Homepage: https://github.com/elfmz/far2l
+Depends: libxerces-c, far2l (= 2.5.3+git20240107)
+Description: FAR2L colorer plugin
+Filename: dists/termux/extras/binary-aarch64/far2l-plugins-colorer_2.5.3+git20240107_aarch64.deb
+Size: 955616
+MD5Sum: fe78dc9bc5c08f6fc0f72dbe79e37729
+SHA1: 465b3181e276c383d02d31b542b3c1d2c97105a7
+SHA256: 96bf305d012a837c4d515ae2361b174942198e8b3c411d32a816c03376eb531f
+SHA512: c20c0751df47496bb55469b1cc5fa0ce4fe78a08760241ccbf73c366bf45fffb3c32f8809f0902d6668055102df58b016310027324f10c2c96f7c30b567dfb63
+
+Package: far2l-plugins-netrocks
+Architecture: aarch64
+Installed-Size: 1568
+Maintainer: @spvkgn
+Version: 2.5.3+git20240107
+Homepage: https://github.com/elfmz/far2l
+Depends: libc++, libneon, libnfs, libssh, openssl, samba, far2l (= 2.5.3+git20240107)
+Description: FAR2L NetRocks plugin (SFTP/SCP/FTP/SMB/NFS/WebDAV)
+Filename: dists/termux/extras/binary-aarch64/far2l-plugins-netrocks_2.5.3+git20240107_aarch64.deb
+Size: 335936
+MD5Sum: 0da3039b560044ac89358e4f4fd85471
+SHA1: f7b319409b67de97736ad03af070f7e72ed940e7
+SHA256: c2bb319a731b441d9f9afd7720d7dbcef1818b3f0e9ed46ece375c9a8ee0c221
+SHA512: b5e1f4275845f2bab04e7312b5baf0a9351eabf872cb902091e9f7f63dadc0379fe17381243b6cc1b39fc4935d523e382da10588a885d3651adf9001d6e3bc16
+
+Package: far2l-ttyxi
+Architecture: aarch64
+Installed-Size: 100
+Maintainer: @spvkgn
+Version: 2.5.3+git20240107
+Homepage: https://github.com/elfmz/far2l
+Depends: libc++, libx11, libxi, far2l (= 2.5.3+git20240107)
+Description: X11/Xi extension to provide best UX for TTY backend
+Filename: dists/termux/extras/binary-aarch64/far2l-ttyxi_2.5.3+git20240107_aarch64.deb
+Size: 25280
+MD5Sum: adcebbb78732dc906e045e31b7f4f71c
+SHA1: 36dbffd48d1ce64d1710d6c881c27300bc24e017
+SHA256: f5430542651909187ec24e075bb921ff3d8356d65b8be7c37aeb8461daeae86b
+SHA512: 0753a88482b71bbcfe2010d0bf4b1684debc1cd7b462adbab07edbb226bd3f4bb274d15dc6e4e4343852b9856ea9b9a9af2a97e1a1a1b22c388c7355fcc600e8
+
+Package: far2l
+Architecture: aarch64
+Installed-Size: 8072
+Maintainer: @spvkgn
+Version: 2.5.3+git20240107
+Homepage: https://github.com/elfmz/far2l
+Depends: libarchive, libc++, libuchardet, pcre
+Suggests: chafa, exiftool, htop, timg
+Description: FAR Manager v2
+Filename: dists/termux/extras/binary-aarch64/far2l_2.5.3+git20240107_aarch64.deb
+Size: 1775216
+MD5Sum: c10a823cd8b3934b657d26dd3dc57bbc
+SHA1: aba9cb003ac0cb8587b0914887280a2b13fbb9df
+SHA256: 251793150db6eaa157ede166432a50d5130deca5491110272847579c583cb956
+SHA512: 7b87077d2d6a195edc30ef469c2350d862d37a38b1b9192706b766ecd702317208bf61297117d68e19e1e1980b6ce14a5729d75bf4413b2b7fec788defe61a20
+
+Package: libxerces-c
+Architecture: aarch64
+Installed-Size: 8992
+Maintainer: @spvkgn
+Version: 3.2.5-1
+Homepage: https://xerces.apache.org/xerces-c/
+Depends: libc++, libiconv
+Description: A validating XML parser library for C++
+Filename: dists/termux/extras/binary-aarch64/libxerces-c_3.2.5-1_aarch64.deb
+Size: 1094156
+MD5Sum: 5536fff7d4f22c32cea79b1454f75e61
+SHA1: 90bb425b370c7a7cafcbe6912faa7a3537dec845
+SHA256: 976bf7d7ec887612414ac2a5beebaa0081fb71af490a25198f93ccc8d8dc3d95
+SHA512: 9440242abdb51584bfaada5ccced87ec095374aab3342f5cc0f1948dffc2de893fb70d82b4b279a8ac75dd778e6e7be244853e444a4f64b78e17282796b2e57e
+
