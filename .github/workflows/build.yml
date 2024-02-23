@@ -1,5 +1,5 @@
 name: build
-run-name: 🌙 Nightly build for ${{ github.event.client_payload.tag }}-${{ github.event.client_payload.sha }}
+run-name: 🌙 Nightly build 🚀 ${{ github.event.client_payload.tag }}-${{ github.event.client_payload.date }}-${{ github.event.client_payload.sha }}
 
 on:
   repository_dispatch:
@@ -17,13 +17,13 @@ jobs:
         target_arch: [aarch64, arm, i686, x86_64]
     steps:
       - name: Checkout termux-packages
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: termux/termux-packages
           path: termux-packages
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: packages
 
@@ -34,16 +34,17 @@ jobs:
           SHA: ${{ github.event.client_payload.sha }}
           TAG: ${{ github.event.client_payload.tag }}
         run: |
-          VERSION=$TAG+git$DATE
+          VERSION=$TAG+git$(date -d $DATE +%Y%m%d)
           find . -type d -name 'far2l' -exec rm -rf {} +
           cp -vr ${GITHUB_WORKSPACE}/packages/* packages
+          sed "s|@GIT_DATE@|$DATE|" -i packages/far2l/build.sh
           sed "s|@VERSION@|$VERSION|" -i packages/far2l/build.sh
           sed "s|@GIT_HASH@|$SHA|" -i packages/far2l/build.sh
           ./scripts/run-docker.sh ./build-package.sh -I -a ${{ matrix.target_arch }} far2l
           ls -1R output
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: debs-${{ matrix.target_arch }}
           path: termux-packages/output/*.deb
@@ -55,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
 
       - name: Merge artifacts
         run: |
@@ -87,7 +88,7 @@ jobs:
           gistID: f53cb6c1d56b0eaf40c88d607fc5fef1
           filename: far2l-termux.json
           label: version
-          message: ${{ github.event.client_payload.tag }}+git${{ github.event.client_payload.date }}
+          message: ${{ github.event.client_payload.tag }}-${{ github.event.client_payload.date }}-${{ github.event.client_payload.sha }}
           color: blue
 
       - name: Delete workflow runs
