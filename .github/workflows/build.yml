@@ -82,7 +82,7 @@ jobs:
 
       - name: Update version for badge
         if: steps.gh-pages.outcome == 'success'
-        uses: schneegans/dynamic-badges-action@v1.6.0
+        uses: schneegans/dynamic-badges-action@v1.7.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: f53cb6c1d56b0eaf40c88d607fc5fef1
