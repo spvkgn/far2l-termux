@@ -1,6 +1,6 @@
 --- a/far2l/src/cfg/ConfigOpt.cpp
 +++ b/far2l/src/cfg/ConfigOpt.cpp
-@@ -167,7 +167,7 @@ const ConfigOpt g_cfg_opts[] {
+@@ -168,7 +168,7 @@ const ConfigOpt g_cfg_opts[] {
  	{true,  NSecInterface, "TimeSeparator", &Opt.strTimeSeparator, GetTimeSeparatorDefaultStr()},
  	{true,  NSecInterface, "DecimalSeparator", &Opt.strDecimalSeparator, GetDecimalSeparatorDefaultStr()},
  
@@ -9,9 +9,9 @@
  	{true,  NSecInterface, "TTYPaletteOverride", &Opt.TTYPaletteOverride, 1},
  
  	{false, NSecInterface, "ShowTimeoutDelFiles", &Opt.ShowTimeoutDelFiles, 50},
-@@ -258,7 +258,7 @@ const ConfigOpt g_cfg_opts[] {
- 	{false, NSecSystem, "SavePluginFoldersHistory", &Opt.SavePluginFoldersHistory, 0},
+@@ -260,7 +260,7 @@ const ConfigOpt g_cfg_opts[] {
  	{true,  NSecSystem, "SaveViewHistory", &Opt.SaveViewHistory, 1},
+ 	{true,  NSecSystem, "HistoryRemoveDupsRule", &Opt.HistoryRemoveDupsRule, 2},
  	{true,  NSecSystem, "AutoHighlightHistory", &Opt.AutoHighlightHistory, 1},
 -	{true,  NSecSystem, "AutoSaveSetup", &Opt.AutoSaveSetup, 0},
 +	{true,  NSecSystem, "AutoSaveSetup", &Opt.AutoSaveSetup, 1},
