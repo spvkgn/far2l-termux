@@ -17,13 +17,13 @@ jobs:
         target_arch: [aarch64, arm, i686, x86_64]
     steps:
       - name: Checkout termux-packages
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: termux/termux-packages
           path: termux-packages
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: packages
 
