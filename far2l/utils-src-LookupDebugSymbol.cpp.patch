@@ -1,0 +1,18 @@
+diff --git a/utils/src/LookupDebugSymbol.cpp b/utils/src/LookupDebugSymbol.cpp
+index e06bf05..592981a 100644
+--- a/utils/src/LookupDebugSymbol.cpp
++++ b/utils/src/LookupDebugSymbol.cpp
+@@ -13,13 +13,11 @@
+ 	typedef Elf64_Phdr Elf_Phdr;
+ 	typedef Elf64_Shdr Elf_Shdr;
+ 	typedef Elf64_Sym  Elf_Sym;
+-#  define ELF_ST_TYPE(INFO) ELF64_ST_TYPE(INFO)
+ # else
+ 	typedef Elf32_Ehdr Elf_Ehdr;
+ 	typedef Elf32_Phdr Elf_Phdr;
+ 	typedef Elf32_Shdr Elf_Shdr;
+ 	typedef Elf32_Sym  Elf_Sym;
+-#  define ELF_ST_TYPE(INFO) ELF32_ST_TYPE(INFO)
+ # endif
+ 
+ static FDScope s_initial_cwdfd(open(".", O_PATH));
