@@ -1,0 +1,12 @@
+diff --git a/WinPort/CMakeLists.txt b/WinPort/CMakeLists.txt
+index e622d0a..aaf4274 100644
+--- a/WinPort/CMakeLists.txt
++++ b/WinPort/CMakeLists.txt
+@@ -77,3 +77,7 @@ endif()
+ if(${CMAKE_SYSTEM_NAME} MATCHES "Haiku")
+     target_link_libraries(WinPort root)
+ endif()
++
++if(${CMAKE_SYSTEM_NAME} MATCHES "Android")
++    target_link_libraries(WinPort PRIVATE android-utimes)
++endif()
