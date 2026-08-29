@@ -1,7 +1,7 @@
 diff --git a/multiarc/src/formats/rar/unrar/os.hpp b/multiarc/src/formats/rar/unrar/os.hpp
 index bb9eb0b0..079d358b 100644
---- a/multiarc/src/formats/rar/unrar/os.hpp
-+++ b/multiarc/src/formats/rar/unrar/os.hpp
+--- a/plugins/multiarc/src/formats/rar/unrar/os.hpp
++++ b/plugins/multiarc/src/formats/rar/unrar/os.hpp
 @@ -175,7 +175,7 @@
  #define SAVE_LINKS
  #endif
