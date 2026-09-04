@@ -1,0 +1,61 @@
+Package: far2l-plugins-colorer
+Architecture: x86_64
+Installed-Size: 14680
+Maintainer: @spvkgn
+Version: 2.9.0+git20260903
+Homepage: https://github.com/elfmz/far2l
+Depends: libxml2, far2l (= 2.9.0+git20260903)
+Description: FAR2L colorer plugin
+Filename: dists/termux/extras/binary-x86_64/far2l-plugins-colorer_2.9.0+git20260903_x86_64.deb
+Size: 1078040
+MD5Sum: afcb98f50dda3794afab5d8bb2ae0969
+SHA1: aba7fa237da42aefe495e501b1f184658b093e30
+SHA256: 1fc9a59f60c4489b56618164b55bf9bf097f06df86abe55f303b0620816506e5
+SHA512: af22de64ab51a83982bc5b27a6135ed2ecb1c1e214fb439dca91c978066e2e1634425230cd95aecad787761563eafdf8d84b52f7e636d3d3096b0d58a34c91d3
+
+Package: far2l-plugins-netrocks
+Architecture: x86_64
+Installed-Size: 2156
+Maintainer: @spvkgn
+Version: 2.9.0+git20260903
+Homepage: https://github.com/elfmz/far2l
+Depends: libc++, libneon, libnfs, libssh, openssl, samba, far2l (= 2.9.0+git20260903)
+Description: FAR2L NetRocks plugin (SFTP/SCP/FTP/SMB/NFS/WebDAV)
+Filename: dists/termux/extras/binary-x86_64/far2l-plugins-netrocks_2.9.0+git20260903_x86_64.deb
+Size: 506796
+MD5Sum: 3676c74b1274a52d97b1ad5b90c8fdb5
+SHA1: d24fcb9887b15a250c3d1b650c10a8de646f1885
+SHA256: 7226363a7316c7e6dd32a77ea1ce16dffb34ec2fbe0403e1ef3d2803f707b740
+SHA512: f172490492a8562b0be4e711b1a2b641c8fd848e09b46a405515e566b7c8e43271b83710ceb6c0a9b8301bd9552813ece2d219e65d57804d1ecdb7364e5c71e9
+
+Package: far2l-ttyxi
+Architecture: x86_64
+Installed-Size: 100
+Maintainer: @spvkgn
+Version: 2.9.0+git20260903
+Homepage: https://github.com/elfmz/far2l
+Depends: libc++, libx11, libxi, far2l (= 2.9.0+git20260903)
+Description: X11/Xi extension to provide best UX for TTY backend
+Filename: dists/termux/extras/binary-x86_64/far2l-ttyxi_2.9.0+git20260903_x86_64.deb
+Size: 27772
+MD5Sum: caf4756968cbff6f287af7b64feccbfd
+SHA1: 6f60ba2410226946e4a96f291c5b23f17878ea7d
+SHA256: 227d26fc373eff641ca2f75c36cb043389d2798f9fdc03af4c77d4926ad935d6
+SHA512: 52ce9bf838b51cc362ea1afd2c599417d0713c73feae5b45bac6d5fff3603c1e437ab4246f1392dedabf1e9a34bfbf1286c7d1776661ebef1128ec796adbb23a
+
+Package: far2l
+Architecture: x86_64
+Installed-Size: 11788
+Maintainer: @spvkgn
+Version: 2.9.0+git20260903
+Homepage: https://github.com/elfmz/far2l
+Depends: libarchive, libc++, libuchardet, libandroid-utimes
+Suggests: chafa, exiftool, htop, timg
+Description: FAR Manager v2
+Filename: dists/termux/extras/binary-x86_64/far2l_2.9.0+git20260903_x86_64.deb
+Size: 2597804
+MD5Sum: b3133f4ccc33a1911ef5fcd316db8e58
+SHA1: 8ce7f28d2a6a9209e57e8ec7873c4a5a46e31e0a
+SHA256: 9288aea2e408161a99b06cc898581bc5af632200a8ccff85e78399d3286ba4b2
+SHA512: 3d7bf9dc2f319abd0f58e2dcdbe32fe6f503d7085fe239799282a12942882ae7a1e10b41358979cf7182c6b0851589081603faf73a665e3ae9e0333540f01207
+
